@@ -5,20 +5,20 @@ var config = {
     projectId: "schedule-4165c",
     storageBucket: "schedule-4165c.appspot.com",
     messagingSenderId: "228465042291"
-  };
-  
-  firebase.initializeApp(config);
+};
 
-  var trainRef = firebase.database();
+firebase.initializeApp(config);
 
-var train= new Object();
+var trainRef = firebase.database();
 
-$("#submit").click(function(event){
+var train = new Object();
+
+$("#submit").click(function (event) {
     event.preventDefault();
-    train.name=$("#train-name").val();
-    train.destination=$("#destination").val();
-    train.first=$("#first-train").val();
-    train.freq=$("#freq").val();
+    train.name = $("#train-name").val();
+    train.destination = $("#destination").val();
+    train.first = $("#first-train").val();
+    train.freq = $("#freq").val();
     trainRef.ref().push(train);
     console.log(train);
     $("#train-name").val("");
@@ -27,7 +27,7 @@ $("#submit").click(function(event){
     $("#freq").val("");
 })
 
-trainRef.ref().on("child_added", function(childSnapshot, prevChildKey) {
+trainRef.ref().on("child_added", function (childSnapshot, prevChildKey) {
 
     console.log(childSnapshot.val());
 
@@ -35,54 +35,58 @@ trainRef.ref().on("child_added", function(childSnapshot, prevChildKey) {
     var Destination = childSnapshot.val().destination;
     var Frequency = childSnapshot.val().freq;
     var First = childSnapshot.val().first;
-    
+
     var start = First.split(":");
-    var startHours = (start[0]*3600);
-    var startMin = (start[1]*60);
-    var startTot = startHours+startMin;
+    var startHours = (start[0] * 3600);
+    var startMin = (start[1] * 60);
+    var startTot = startHours + startMin;
 
 
-    var nowHours= moment().hour();
-    var nowMinutes= moment().minute();
-    var NowTot=(nowHours*3600)+(nowMinutes*60);
+    var nowHours = moment().hour();
+    var nowMinutes = moment().minute();
+    var NowTot = (nowHours * 3600) + (nowMinutes * 60);
+    var freqTot = Frequency * 60;
+    var Next;
 
-    var freqTot= Frequency*60;
-    
-    
-    
+
     console.log("Now " + NowTot);
     console.log("Start " + startTot);
     console.log("Freq " + freqTot);
-   
-        var n = 0;
-        var x = 0;
-    function calcForwards(i){
-      
-        while (x < startTot) {
-          n++;
-          x = n*freqTot;
+
+    var n = 0;
+    var x = 0;
+
+    function calcForwards(Next) {
+
+        while (x < NowTot) {
+            n++;
+            x = n * freqTot;
+            Next=x
+
         }
-       console.log(n)
-    };
- 
- calcForwards();
-   // function calcBackwards(){
-//
-   // }
+       
+    }
+   
+
+    calcForwards();
+     console.log("Blah " + Next);
+    // function calcBackwards(){
+    //
+    // }
 
 
-   
-   
-    var trainTime ;
-    var tMinutes;
-    var tArrival;
-    
-    
+
+
+
+   // var Minutes;
+   // var Arrival;
+
+
 
 
     $("#sched > tbody").append("<tr><td>" + Name + "</td><td>" + Destination + "</td><td>" +
-    Frequency + "</td><td>" + Arrival + "</td><td>" + Minutes + "</td></tr>"
-    
-);
+        Frequency + "</td>"//<td>" + Arrival + "</td><td>" + Minutes + "</td></tr>"
+
+    );
 
 })
