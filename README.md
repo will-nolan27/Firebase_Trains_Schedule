@@ -1,1 +1,2 @@
 # Firebase_Trains_Schedule
+This application allows a user to input train information that includes it's Name, Destination, Departure frequency (in minutes), and First Departure time. It then updates that information to a Firebase Database and displays it in a table. Javascript functions use Departure frequncy, First Departure time, and the moment function from Moment.js to calculate Next Arrival time and how long the wait till the Next Arrival is.
