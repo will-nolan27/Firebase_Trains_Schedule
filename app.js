@@ -77,7 +77,7 @@ trainRef.ref().on("child_added", function (childSnapshot, prevChildKey) {
         if (Math.floor(d / 3600) > 12) {
             var h = (Math.floor(d / 3600)) - 12;
             var m = Math.floor(d % 3600 / 60);
-            dis = h + ":" + m + "p.m.";
+            dis = h + ":" + m + " p.m.";
         } else {
             var h = Math.floor(d / 3600);
             var m = Math.floor(d % 3600 / 60);
